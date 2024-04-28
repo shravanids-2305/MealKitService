@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style2.css">
+  <title>Login Options</title>
+</head>
+
+<body>
+
+
+
+  <script>
+    function uncheckCustomer() {
+      document.getElementById('customer').checked = false;
+    }
+
+    function uncheckVendor() {
+      document.getElementById('vendor').checked = false;
+    }
+  </script>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Modern Login Page</title>
+  </head>
+
+  <body>
+
+    <div class="container" id="container">
+      <div class="form-container sign-up">
+        <form id="signup">
+          <h1>Create Account</h1>
+          <input type="text" placeholder="Name">
+          <input type="email" placeholder="Email" id="sign-name">
+          <input type="password" placeholder="Password" id="sign-pass">
+          <div class="login-options">
+            <input type="radio" id="lvendor" name="login-type" class="checkbox" value="vendor">
+            <label for="lvendor" class="checkbox-label">Login as Vendor</label>
+
+            <input type="radio" id="lcustomer" name="login-type" class="checkbox" value="customer">
+            <label for="lcustomer" class="checkbox-label">Login as Customer</label>
+          </div>
+          <button id="register">Sign Up</button>
+        </form>
+      </div>
+      <div class="form-container sign-in">
+        <form id="signin">
+          <h1>Sign In</h1>
+          <input type="email" placeholder="Email" id="lmail">
+          <input type="password" placeholder="Password" id="lpass">
+          <a href="#">Forget Your Password?</a>
+          <div class="login-options">
+            <input type="radio" id="vendor" name="login-type" class="checkbox" value="vendor">
+            <label for="vendor" class="checkbox-label">Login as Vendor</label>
+
+            <input type="radio" id="customer" name="login-type" class="checkbox" value="customer">
+            <label for="customer" class="checkbox-label">Login as Customer</label>
+          </div>
+          <button id="login">Sign In</button>
+        </form>
+      </div>
+      <div class="toggle-container">
+        <div class="toggle">f
+          <div class="toggle-panel toggle-left">
+            <h1>Welcome Back!</h1>
+            <p>Enter your personal details to use all site features</p>
+            <button class="hidden" id="logins">Sign In</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <h1>Welcome, Friend!</h1>
+            <p>Enter your personal details to use all site features</p>
+            <button class="hidden" id="registers">Sign Up</button>
+
+          </div>
+        </div>
+        <script>
+          let vendor_login = [{
+            username: 'hometown@gmail.com',
+            password: 'abc@123'
+          }]
+
+          localStorage.setItem('vendor', JSON.stringify(vendor_login))
+          let cust_login = [{
+            username: 'ms@gmail.com',
+            password: 'abc@123'
+          }]
+
+          localStorage.setItem('customer', JSON.stringify(cust_login))
+          localStorage.setItem('vendordata', '[]')
+
+          document.addEventListener('DOMContentLoaded', function () {
+            const container = document.getElementById('container');
+            const registerBtn = document.getElementById('registers');
+            const loginBtn = document.getElementById('logins');
+
+            registerBtn.addEventListener('click', () => {
+              container.classList.add("active");
+            });
+
+            loginBtn.addEventListener('click', () => {
+              container.classList.remove("active");
+            });
+
+            // Function to handle login check
+            function checkLogin() {
+              let userType = document.querySelector('input[name="login-type"]:checked').value; // Get the selected user type
+              const username = document.getElementById('lmail').value;
+              const password = document.getElementById('lpass').value;
+
+              let logdata;
+              if (userType === 'vendor') {
+                logdata = JSON.parse(localStorage.getItem('vendor'));
+              } else if (userType === 'customer') {
+                logdata = JSON.parse(localStorage.getItem('customer'));
+              }
+
+              if (logdata) {
+                const foundUser = logdata.find(user => user.username === username && user.password === password);
+                if (foundUser) {
+                  localStorage.setItem('islogin', 'true')
+                  localStorage.setItem('loginuser', username)
+                  // alert(`Login successful as ${userType}`);
+                  if (userType === 'vendor') {
+    window.open('file:///C:/Users/sonaw/OneDrive/Desktop/shravani/form.html', '_blank');
+    console.log("<<<<<<<<<<<<<<<<<<<<<<");
+} else if (userType === 'customer') {
+    window.open('file:///C:/Users/sonaw/OneDrive/Desktop/shravani/new.html', '_blank');
+}
+
+
+                } else {
+                  alert(`${userType} login failed`);
+                }
+              } else {
+                alert(`${userType} login failed`);
+              }
+            }
+
+            // Function to handle registration
+            function checkRegister() {
+              let userType = document.querySelector('input[name="login-type"]:checked').value; // Get the selected user type
+              const username = document.getElementById('sign-name').value;
+              const password = document.getElementById('sign-pass').value;
+
+              let logdata;
+              if (userType === 'vendor') {
+                logdata = JSON.parse(localStorage.getItem('vendor')) || [];
+              } else if (userType === 'customer') {
+                logdata = JSON.parse(localStorage.getItem('customer')) || [];
+              }
+
+              let newUser = {
+                username: username,
+                password: password
+              };
+              // let signdata = JSON.parse(localStorage.getItem(userType));
+
+
+              logdata.push(newUser);
+              localStorage.setItem(userType, JSON.stringify(logdata));
+              alert(`Registration successful as ${userType}`);
+            }
+
+            // Event listener for the login button
+            document.getElementById('login').addEventListener('click', checkLogin);
+            document.getElementById('register').addEventListener('click', checkRegister);
+          });</script>
+  </body>
+
+  </html>
+
+
+</body>
+
+</html>

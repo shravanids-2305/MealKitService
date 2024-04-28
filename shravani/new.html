@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Thali Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .thali {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            width: calc(33.33% - 20px); /* 33.33% width with 20px margin between items */
+            margin-right: 20px;
+        }
+
+        .thali img {
+            width: 100%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .thali-content {
+            padding: 20px;
+        }
+
+        .thali-title {
+            font-size: 24px;
+            margin: 0;
+            color: #333;
+        }
+
+        .thali-description {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .thali-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff6f61;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="thaliContainer">
+    <!-- Thali containers will be dynamically added here -->
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fetch vendor data from local storage
+        const vendorData = JSON.parse(localStorage.getItem("vendordata")) || [];
+
+        // Get the container where thali divs will be added
+        const container = document.getElementById("thaliContainer");
+        // Loop through vendor data to create thali containers
+        vendorData.forEach(vendor => {
+            console.log(vendor);
+            console.log(vendor.photo);
+
+
+            const thaliDiv = document.createElement("div");
+            thaliDiv.classList.add("thali");
+
+            const thaliContent = `
+                <img src="${vendor.photoname}" alt="meal Image">
+                <div class="thali-content">
+                    <h2 class="thali-title">${vendor.name}</h2>
+                    <p class="thali-description">Address: ${vendor.address}</p>
+                    <p class="thali-description"><b>${vendor.mealkit}</b></p>
+                    <p class="thali-description">Contact:${vendor.contact}</p>
+                    <p class="thali-price">Rs.${vendor.price}</p>
+                    <p class="thali-description">Special Instruction:${vendor.instructions}</p>
+                    <p class="thali-price">Now ${vendor.status}</p>
+                </div>
+            `;
+
+            thaliDiv.innerHTML = thaliContent;
+            container.appendChild(thaliDiv);
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meal Kit Order Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        /* background-image: url('official_background.jpg'); Replace 'official_background.jpg' with your desired image */
+        background-size: cover;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+        color: #555;
+    }
+    input[type="text"], input[type="tel"], input[type="number"], select, option, input[type="file"], textarea {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .menu-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .add-menu, button[type="button"], button[type="submit"], button[type="special-instructions"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px; /* Add space between buttons */
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+    .add-menu:hover, button[type="button"]:hover, button[type="submit"]:hover, button[type="special-instructions"]:hover {
+        background-color: #0056b3;
+    }
+    .add-menu::before, button[type="button"]::before, button[type="submit"]::before, button[type="special-instructions"]::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transition: all 0.5s ease;
+        z-index: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    .add-menu:hover::before, button[type="button"]:hover::before, button[type="submit"]:hover::before, button[type="special-instructions"]:hover::before {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    .add-menu span, button[type="button"] span, button[type="submit"] span, button[type="special-instructions"] span {
+        position: relative;
+        z-index: 1;
+    }
+    .upload-label {
+        display: block;
+        margin-bottom: 10px;
+        color: #555;
+    }
+    .upload-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .upload-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>meal kit serviece</h2>
+    <form id="meal-kit-serviece">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" style="height: 70px;" required>
+
+        <label for="contact">Contact Number:</label>
+        <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+
+        <label for="meal-kit">Meal Kit Name:</label>
+        <input type="text" id="meal-kit" name="mealkit" required>
+
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" required>
+
+        <label for="photo" class="upload-label">Upload Photo:</label>
+        <input type="file" id="photo" name="photo" accept="image/*">
+
+        <label for="instructions">Special Instructions:</label>
+        <textarea id="instructions" name="instructions" rows="4"></textarea>
+        <label for="status">status:</label>
+<select id="status" name="status">
+  <option value="open">open</option>
+  <option value="close">close</option>
+</select>
+        
+        <!-- <div id="menu-items">
+            <div class="menu-item">
+                <input type="text" name="menu[]" placeholder="Menu Item" required>
+                <input type="number" name="quantity[]" placeholder="Quantity" min="1" required>
+                <input type="text" name="price[]" placeholder="Price" required>
+            </div>
+        </div>
+        <button type="button" id="add-menu" class="add-menu">Add Menu Item</button> -->
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    // document.getElementById('add-menu').addEventListener('click', function() {
+    //     var menuItems = document.getElementById('menu-items');
+    //     var menuItem = document.createElement('div');
+    //     menuItem.classList.add('menu-item');
+    //     menuItem.innerHTML = '<input type="text" name="menu[]" placeholder="Menu Item" required>' +
+    //         '<input type="number" name="quantity[]" placeholder="Quantity" min="1" required>' +
+    //         '<input type="text" name="price[]" placeholder="Price" required>';
+    //     menuItems.appendChild(menuItem);
+    // });
+
+    document.getElementById('meal-kit-serviece').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    
+    // Get form elements
+    var form = event.target;
+    var formData = new FormData(form);
+
+    // Create an object to store form data
+    var formDataObject = {};
+    formData.forEach(function(value, key){
+        formDataObject[key] = value;
+    });
+    var uploadedFileInput = form.querySelector('input[type="file"]');
+    // Log the form data object to the console
+    var uploadedFileName = uploadedFileInput.files[0].name;
+    console.log('Uploaded image name:', uploadedFileName);
+    let photoname = uploadedFileName
+    formDataObject.photoname = photoname
+    console.log(formDataObject);
+    let vendordata =JSON.parse( localStorage.getItem('vendordata'))
+
+    vendordata.push(formDataObject)
+    localStorage.setItem('vendordata',JSON.stringify(vendordata))
+    
+    // You can perform additional actions here, like sending the data to a server using fetch or XMLHttpRequest
+});
+
+</script>
+
+</body>
+</html>
